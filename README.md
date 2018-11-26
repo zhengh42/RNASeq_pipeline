@@ -1,29 +1,47 @@
 # RNASeq_pipeline
 
-## Process each sample
-run_workflow.sh describes the workflow for analysis of each sample from TCGA pan-cancer RNASeq dataset.
+run_workflow.sh describes each step of the analysis. 
 
-0. Before running the workflow, download and index reference files first. See prepare_reference/run_prepare_reference.sh
-1. Download bam files from GDC data portal. Sample selection is described in TCGA_RNASeq/run_samplingTCGA.R
-2. Convert to fastq
-3. QC by trim-galore
-4. Kallisto
-4.1 with sequence bias estimation
-4.2 without sequence bias estimation
-5. Salmon
-5.1 with sequence and gc bias estimation
-5.2 without sequence and gc bias estimation
-6. STAR
-7. RSEM
-8. HTSeq
-9. featureCounts
+### Prepare reference
 
-Simulation for RNASeq reads is described in simulation_RNASeq/run_simulation.sh
-Processing for simulated dataset is the same as TCGA pan-cancer dataset (starting at step 3)
+Before running the workflow, download and index reference files first. See prepare_reference/run_reference.sh
 
-## Further processing, batch-level
-Kallisto and Salmon measure the expression level of each transcript by default. To get gene-level expression results, the package tximport was used. The script is found in scripts/tximport.R
+### Download RNA-Seq datasets
 
-HTSeq and featureCounts output read count for each gene. TPM values were generated from read counts with scripts/run_HTSeq_count_to_tpm.sh and scripts/run_featurecounts_count_to_tpm.sh.
+Both un-stranded and reverse-stranded RNA-Seq data from TCGA samples were downloaded from ISB Cancer Genomics Cloud (ISB-CGC). The other reverse-stranded dataset was downloaded from NCBI Sequence Read Archive (SRA) under the accession PRJEB11797. 
 
+### Process real RNA-Seq datasets
+
+Reads QC were performed with Trim galore (27), with the setting “-q 20 --stringency 3 --gzip --length 20 --paired”. Afterwards the reads were mapped to the human transcriptome (both GENCODE and GENCODE combined with NONCODE) by STAR, and were further processed by RSEM (28) (version 1.3.0) to obtain gene and transcript expression. Stand-specific option was set as `-- forward-prob 0.5` for un-stranded samples and `--forward-prob 0` for reverse-stranded samples. Refer to "QC", "STAR", and "RSEMAfterSTAR" sections in run_workflow.sh.
+
+### Simulation of RNA-Seq reads
+
+Simulation of RNA-Seq reads was performed with the RSEM command rsem-simulate-reads, using the model information and quantification results of real samples. The total number of simulated reads for each sample is 60 million. The simulated samples with pre-defined gene expression levels serve as the “ground truth” for the evaluation of other pipelines. Refer to "simulation" section in run_workflow.sh.
+
+### Process simulated RNA-Seq datasets
+
+1. Pseudoalignment methods
+
+-  Kallisto
+-  Salmon
+
+2. Alignment-based methods
+
+    - Alignment
+
+        - STAR
+        - Subread
+        - HISAT2
+
+    - Quantification
+
+        - HTSeq
+            - HTSeq after STAR
+            - HTSeq after Subread
+            - HTSeq after HISAT2
+
+        - featureCounts
+            - featureCounts after STAR
+            - featureCounts after Subread
+            - featureCounts after HISAT2
 
