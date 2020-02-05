@@ -2,6 +2,7 @@
 !.gitignore
 !README.md
 !*.sh
+!LICENSE
 
 **/.DS_Store
 
@@ -9,6 +10,7 @@
 prepare_reference/*
 !prepare_reference/*.sh
 !prepare_reference/*.R
+!prepare_reference/duplicate_clusters.tsv
 
 !scripts/
 

@@ -46,9 +46,9 @@ less ../output/Salmon/TCGA-AX-A3FS-01A-11R-A22K-07_simul/quant.sf  | cut -f1 | s
 less gencode.v27.annotation.gtf | grep -v ^# | awk '$3!="gene"' | awk '{print $12,$0}' | sed 's/^"//;s/";\s\+/\t/' > gencode.v27.annotation.gtf.tmp
 less gencode.v27.annotation.gtf.tmp | match.pl gencode.v27.annotation.gtf.txids 1 - 1 | paste - gencode.v27.annotation.gtf.tmp | cut -f2,4- > gencode.v27.annotation.gtf.tmp1
 less NONCODEv5_human_hg38_lncRNA.gtf  | grep -v ^# | awk '{print $12,$0}' | sed 's/^"//;s/";\s\+/\t/' > NONCODEv5_human_hg38_lncRNA.gtf.tmp
-cat gencode.v27.annotation.gtf.tmp1 NONCODEv5_human_hg38_lncRNA.gtf.tmp | Exclude.pl GENCODE_NONCODE.salmon_ambiguousStrandKept.idx/duplicate_clusters.tsv 2 - 1 | cut -f2- | awk '$7!="." && $1!~/_/'> GENCODE_NONCODE.annotation.gtf
+cat gencode.v27.annotation.gtf.tmp1 NONCODEv5_human_hg38_lncRNA.gtf.tmp | Exclude.pl duplicate_clusters.tsv 2 - 1 | cut -f2- | awk '$7!="." && $1!~/_/'> GENCODE_NONCODE.annotation.gtf
 
-cat gencode.v27.annotation.gtf.tmp1 NONCODEv5_human_hg38_lncRNA.gtf.tmp | Exclude.pl GENCODE_NONCODE.salmon_ambiguousStrandKept.idx/duplicate_clusters.tsv 2 - 1 |  awk '$8!="." && $2!~/_/ && $4=="transcript"' | cut -f1 > GENCODE_NONCODE.transcripts.ids
+cat gencode.v27.annotation.gtf.tmp1 NONCODEv5_human_hg38_lncRNA.gtf.tmp | Exclude.pl duplicate_clusters.tsv 2 - 1 |  awk '$8!="." && $2!~/_/ && $4=="transcript"' | cut -f1 > GENCODE_NONCODE.transcripts.ids
 less GENCODE_NONCODE.transcripts.tmp |  awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' | sed 'N;s/\n/\t/g;s/>/>\t/' | Extract.pl  GENCODE_NONCODE.transcripts.ids 1 - 2 | sed 's/>\t/>/;s/\t/\n/' > GENCODE_NONCODE.transcripts.fa
 #----------------------------------------------------------------------------------------------
 
