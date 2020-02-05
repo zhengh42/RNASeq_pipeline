@@ -4,13 +4,13 @@ This repository describes common pipelines for RNA sequencing analysis.
 
 Outline:
 
-1. Transcriptome and references
+1. Transcriptome and references  
 
-  -  Human
+  -  Human  
     - GENCODE: the commonly-used transcriptome (https://www.gencodegenes.org/).
     - GENCODE + NONCODE: for investigation long non-coding RNAs not included in GENCODE. NONCODE (http://www.noncode.org/) is an integrated knowledge database dedicated to non-coding RNAs (excluding tRNAs and rRNAs).
     
-  -  Mice
+  -  Mice  
     - GENCODE
     
 2. Pipelines    
