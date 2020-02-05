@@ -1,47 +1,59 @@
-# RNASeq_pipeline
+# RNASeq pipeline
 
-run_workflow.sh describes each step of the analysis. 
+This repository describes common pipelines for RNA sequencing analysis.
 
-### Prepare reference
+Outline:
 
-Before running the workflow, download and index reference files first. See prepare_reference/run_reference.sh
+1. Transcriptome and references
 
-### Download RNA-Seq datasets
+  -  Human (homo sapiens)
+    - GENCODE: the commonly-used transcriptome (https://www.gencodegenes.org/)
+    - GENCODE + NONCODE: for investigation long non-coding RNAs not included in GENCODE. NONCODE (http://www.noncode.org/) is an integrated knowledge database dedicated to non-coding RNAs (excluding tRNAs and rRNAs).
+  -  Mice (mus musmusculus)
+    - GENCODE
+    
+2. Pipelines    
 
-Both un-stranded and reverse-stranded RNA-Seq data from TCGA samples were downloaded from ISB Cancer Genomics Cloud (ISB-CGC). The other reverse-stranded dataset was downloaded from NCBI Sequence Read Archive (SRA) under the accession PRJEB11797. 
+  - Quality control
+    - Trim Galore
+      - Unaligned reads
+      - Low-quality bases
+      - Adaptor sequences
+      - Very short reads
 
-### Process real RNA-Seq datasets
+    - RSeQC
+      - Mapping rates
+      - Unique reads
+      - Reads distribution
 
-Reads QC were performed with Trim galore (27), with the setting “-q 20 --stringency 3 --gzip --length 20 --paired”. Afterwards the reads were mapped to the human transcriptome (both GENCODE and GENCODE combined with NONCODE) by STAR, and were further processed by RSEM (28) (version 1.3.0) to obtain gene and transcript expression. Stand-specific option was set as `-- forward-prob 0.5` for un-stranded samples and `--forward-prob 0` for reverse-stranded samples. Refer to "QC", "STAR", and "RSEMAfterSTAR" sections in run_workflow.sh.
+  - Human gene expression quantification
+    - Kalliso
+    - STAR and RSME
+    - STAR and featureCounts
 
-### Simulation of RNA-Seq reads
+  - Other gene expression quantification
+    - Exogenous viruses
+    - Endogenous retrovirus 
+  
+  - Differential expression analysis
+    - DESeq2
+    
+  - Module network analysis
+    - AMARETTO
+    - WGCNA
+  
+## Prepare reference
 
-Simulation of RNA-Seq reads was performed with the RSEM command rsem-simulate-reads, using the model information and quantification results of real samples. The total number of simulated reads for each sample is 60 million. The simulated samples with pre-defined gene expression levels serve as the “ground truth” for the evaluation of other pipelines. Refer to "simulation" section in run_workflow.sh.
+Before running the pipelines, download genome and transcriptome refernces and prepare indexes for each tool first. See prepare_reference.sh for detailed instructions.
 
-### Process simulated RNA-Seq datasets
+GENCODE references can be downloaded directly from their website. 
 
-1. Pseudoalignment methods
+If including NONCODE in the analysis and combining with GENCODE transcriptome, the redundant records between the two need to be removed. The pprepare_reference script takes care of that, genetating gencodev32noncodev5.fa and gencodev32noncodev5.annotation.gtf for downstream analysis. For convenience the two files can be found in Stanford Medicine Box: https://stanfordmedicine.app.box.com/folder/102547052245
 
--  Kallisto
--  Salmon
+## Quality control
 
-2. Alignment-based methods
+## Gene expression quantification
 
-    - Alignment
 
-        - STAR
-        - Subread
-        - HISAT2
 
-    - Quantification
-
-        - HTSeq
-            - HTSeq after STAR
-            - HTSeq after Subread
-            - HTSeq after HISAT2
-
-        - featureCounts
-            - featureCounts after STAR
-            - featureCounts after Subread
-            - featureCounts after HISAT2
 

@@ -12,15 +12,5 @@ prepare_reference/*
 !prepare_reference/*.R
 !prepare_reference/duplicate_clusters.tsv
 
-!scripts/
-
-!simulation_RNASeq/
-simulation_RNASeq/*
-!simulation_RNASeq/*.sh
-!simulation_RNASeq/*.R
-
-!TCGA_RNASeq/
-TCGA_RNASeq/*
-!TCGA_RNASeq/*.sh
-!TCGA_RNASeq/*.R
+!smalltools/
 
