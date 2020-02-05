@@ -7,8 +7,8 @@ Outline:
 1. Transcriptome and references  
 
   -  Human  
-    - GENCODE: the commonly-used transcriptome (https://www.gencodegenes.org/).
-    - GENCODE + NONCODE: for investigation long non-coding RNAs not included in GENCODE. NONCODE (http://www.noncode.org/) is an integrated knowledge database dedicated to non-coding RNAs (excluding tRNAs and rRNAs).
+    - GENCODE, the commonly-used transcriptome (https://www.gencodegenes.org/).
+    - GENCODE and NONCODE, for investigation long non-coding RNAs not included in GENCODE. NONCODE (http://www.noncode.org/) is an integrated knowledge database dedicated to non-coding RNAs (excluding tRNAs and rRNAs).
     
   -  Mice  
     - GENCODE
