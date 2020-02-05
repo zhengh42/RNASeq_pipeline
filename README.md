@@ -9,6 +9,7 @@ Outline:
   -  Human (homo sapiens)
     - GENCODE: the commonly-used transcriptome (https://www.gencodegenes.org/)
     - GENCODE + NONCODE: for investigation long non-coding RNAs not included in GENCODE. NONCODE (http://www.noncode.org/) is an integrated knowledge database dedicated to non-coding RNAs (excluding tRNAs and rRNAs).
+    
   -  Mice (mus musmusculus)
     - GENCODE
     
@@ -33,7 +34,7 @@ Outline:
 
   - Other gene expression quantification
     - Exogenous viruses
-    - Endogenous retrovirus 
+    - Endogenous retroviruses 
   
   - Differential expression analysis
     - DESeq2
