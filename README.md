@@ -53,8 +53,9 @@ If including NONCODE in the analysis and combining with GENCODE transcriptome, t
 
 ## Quality control
 
+Trim Galore and RSeQC perform quality control for raw fastq sequences and aligned reads, respectively. This workflow uses STAR to align the reads to the genome.
+
 ## Gene expression quantification
 
-
-
+For DESeq2 analysis, the "samplemeta" file is required in the project folder. This file should have at least two columns: "sampleID" for samples names, and "condition" to specify the sample groups.
 
