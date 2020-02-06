@@ -49,7 +49,7 @@ Before running the pipelines, download genome and transcriptome refernces and pr
 
 GENCODE references can be downloaded directly from their website. 
 
-If including NONCODE in the analysis and combining with GENCODE transcriptome, the redundant records between the two need to be removed. The pprepare_reference script takes care of that, genetating gencodev32noncodev5.fa and gencodev32noncodev5.annotation.gtf for downstream analysis. For convenience the two files can be found in Stanford Medicine Box: https://stanfordmedicine.app.box.com/folder/102547052245
+If including NONCODE in the analysis and combining with GENCODE transcriptome, the redundant records between the two need to be removed. The pprepare_reference script takes care of that, genetating gencodev32noncodev5.fa and gencodev32noncodev5.annotation.gtf for downstream analysis. For convenience the two files can be found in Stanford Medicine Box: https://stanfordmedicine.box.com/s/pmug91mcmta1uijc4ldk37lbt4x3p7ke
 
 ## Quality control
 
