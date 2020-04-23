@@ -80,7 +80,7 @@ if [ $run_strandInfo == 1 ]; then
 		$kallisto quant -i $KALLISTO_INDEX -o $workDir/$projectid/kallisto/${sampleid}.rf $workDir/$projectid/seq/${sampleid}_1.test.fq $workDir/$projectid/seq/${sampleid}_2.test.fq --rf-stranded
 		$kallisto quant -i $KALLISTO_INDEX -o $workDir/$projectid/kallisto/${sampleid}.fr $workDir/$projectid/seq/${sampleid}_1.test.fq $workDir/$projectid/seq/${sampleid}_2.test.fq --fr-stranded
 	
-		paste $workDir/$projectid/kallisto/${sampleid}.un/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.rf/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.fr/abundance.tsv | cut -f1,4,9,14  | awk 'BEGIN{sum1=0;sum2=0;sun3=0}{sum1+=$2;sum2+=$3;sum3+=$4}END{print sum1,sum2,sum3}' > $workDir/$projectid/kallisto/${sampleid}.libtypetesting
+		paste $workDir/$projectid/kallisto/${sampleid}.fr/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.rf/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.un/abundance.tsv | cut -f1,4,9,14  | awk 'BEGIN{sum1=0;sum2=0;sun3=0}{sum1+=$2;sum2+=$3;sum3+=$4}END{print sum1,sum2,sum3}' > $workDir/$projectid/kallisto/${sampleid}.libtypetesting
 		less $workDir/$projectid/kallisto/${sampleid}.libtypetesting | awk '{print $2/$1,$3/$1,$3/$2}' | awk '{if($1<0.3 && $3>3)print "stranded";else if($1>3 && $2>3)print "reverse";else print "unstranded"}' > $workDir/$projectid/kallisto/${sampleid}.libtype
 		rm $workDir/$projectid/seq/${sampleid}_1.test.fq $workDir/$projectid/seq/${sampleid}_2.test.fq
 		rm -rf $workDir/$projectid/kallisto/${sampleid}.un $workDir/$projectid/kallisto/${sampleid}.rf $workDir/$projectid/kallisto/${sampleid}.fr
@@ -93,7 +93,7 @@ if [ $run_strandInfo == 1 ]; then
                 $kallisto quant -i $KALLISTO_INDEX -o $workDir/$projectid/kallisto/${sampleid}.rf $workDir/$projectid/seq/${sampleid}_trimmed.test.fq --single -l 190 -s 20 --rf-stranded
                 $kallisto quant -i $KALLISTO_INDEX -o $workDir/$projectid/kallisto/${sampleid}.fr $workDir/$projectid/seq/${sampleid}_trimmed.test.fq --single -l 190 -s 20 --fr-stranded
 
-                paste $workDir/$projectid/kallisto/${sampleid}.un/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.rf/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.fr/abundance.tsv | cut -f1,4,9,14  | awk 'BEGIN{sum1=0;sum2=0;sun3=0}{sum1+=$2;sum2+=$3;sum3+=$4}END{print sum1,sum2,sum3}' > $workDir/$projectid/kallisto/${sampleid}.libtypetesting
+                paste $workDir/$projectid/kallisto/${sampleid}.fr/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.rf/abundance.tsv $workDir/$projectid/kallisto/${sampleid}.un/abundance.tsv | cut -f1,4,9,14  | awk 'BEGIN{sum1=0;sum2=0;sun3=0}{sum1+=$2;sum2+=$3;sum3+=$4}END{print sum1,sum2,sum3}' > $workDir/$projectid/kallisto/${sampleid}.libtypetesting
                 less $workDir/$projectid/kallisto/${sampleid}.libtypetesting | awk '{print $2/$1,$3/$1,$3/$2}' | awk '{if($1<0.3 && $3>3)print "stranded";else if($1>3 && $2>3)print "reverse";else print "unstranded"}' > $workDir/$projectid/kallisto/${sampleid}.libtype
                 rm $workDir/$projectid/seq/${sampleid}_trim.test.fq 
                 rm -rf $workDir/$projectid/kallisto/${sampleid}.un $workDir/$projectid/kallisto/${sampleid}.rf $workDir/$projectid/kallisto/${sampleid}.fr
